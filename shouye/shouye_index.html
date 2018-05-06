@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="../css/shouye.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont_shouye.css"/>
+		
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" id="header">
+		    <h1 class="mui-title" id="title">农产品销售平台</h1>
+		</header>
+		
+		<div class="mui-content">
+		   <!--轮播图-->
+			<div id="slider" class="mui-slider" >
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../images/tu3.jpg">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../images/tu1.jpg">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../images/tu2.jpg">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../images/tu3.jpg">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../images/tu1.jpg">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<!--八宫格-->
+			<div id="ncplist" class="box-a">
+		    	<div id="1255" class="box-a-l">
+		    		<span class="iconfont icon-shucai tu-yi"></span>
+		    		<p>水果</p>
+		    	</div>
+		    	<div id="1256" class="box-a-l">
+		    		<span class="iconfont icon-shucai1 tu-er"></span>
+		    		<p>蔬菜</p>
+		    	</div>
+		    	<div id="1257"  class="box-a-l">
+		    		<span class="iconfont icon-Corn tu-san"></span>
+		    		<p>粗粮</p>
+		    	</div>
+		    	<div id="1258" class="box-a-l">
+		    		<span class="iconfont icon-liangyoufushi tu-si"></span>
+		    		<p>粮油</p>
+		    	</div>
+		    	<div id="1259" class="box-a-l">
+		    		<span class="iconfont icon-nongchanpin tu-wu"></span>
+		    		<p>野味</p>
+		    	</div>
+		    	<div id="1260" class="box-a-l">
+		    		<span class="iconfont icon-nongfuchanpin tu-liu"></span>
+		    		<p>菌类</p>
+		    	</div>
+		    	<div id="1261" class="box-a-l">
+		    		<span class="iconfont icon-shucai2 tu-qi"></span>
+		    		<p>大米</p>
+		    	</div>
+		    	<div id="1262" class="box-a-l">
+		    		<span class="iconfont icon-malingshu tu-ba"></span>
+		    		<p>土特产</p>
+		    	</div>
+			</div>
+			<!--四宫格-->
+			<div id="dazhe">
+				<ul class="mui-table-view mui-grid-view">
+					<li class="mui-table-view-cell mui-media mui-col-xs-6">
+						<a href="#">
+							<img class="mui-media-object" src="../images/si_1.jpg">
+							<div class="mui-media-body">天天特价</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-6">
+						<a href="#">
+							<img class="mui-media-object" src="../images/si-2.jpg">
+							<div class="mui-media-body">打折产品</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-6">
+						<a href="#"><img class="mui-media-object" src="../images/si-3.jpg">
+							<div class="mui-media-body">品质好物</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-6">
+						<a href="#">
+							<img class="mui-media-object" src="../images/si-4.jpg">
+							<div class="mui-media-body">量贩优选</div>
+						</a>
+					</li>
+				</ul>   
+			</div>
+			<!--广告位-->
+			<div id="guanggao" class="mui-table-view">
+				<ul class="mui-table-view mui-grid-view">
+					<li class="mui-table-view-cell mui-media mui-col-xs-12">
+						<img src="../images/guanggao.jpg"/>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+		
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:1500//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+		</script>
+		<script type="text/javascript">
+			mui.plusReady(function(){
+				
+			})
+			
+			//生成订单
+//			var new_order = document.getElementById("new_order");
+//			new_order.addEventListener('tap',function(){
+//				mui.openWindow({
+//					url: 'new_order.html',
+//					id: 'new_order',
+//					extras:{
+//				    	img_path:img_path
+//				    },
+//					show: {
+//						aniShow: 'pop-in'
+//					},
+//					waiting: {
+//						autoShow: false
+//					}
+//				}); 
+//			})
+
+			//批量监听
+			mui('#ncplist').on('tap', '.box-a-l', function() {
+				var cate_id = this.getAttribute('id');
+				mui.openWindow({
+					url:'goods_list.html',   
+				    id:'goods_list',
+				    extras:{
+				    	cate_id:cate_id
+				    },
+				    show:{
+				    	aniShow: 'pop-in'
+					},
+					styles: {
+						popGesture: 'hide'
+					},
+					waiting:{
+						autoShow:true
+					}
+				});
+			}); 
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/message.css"/>
+	</head>
+
+	
+
+	<body>
+		<header class="mui-bar mui-bar-nav" id="header">
+		    <h1 class="mui-title" id="title">实时咨询</h1>
+		</header>
+		
+		<div class="mui-content">
+		    <ul class="mui-table-view" id="imlist">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../images/qq.png">
+						<div class="mui-media-body">
+							张三
+							<p class='mui-ellipsis'>2017年1月1日23:36:21</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="../images/weixin.png">
+						<div class="mui-media-body">
+							李四
+							<p class='mui-ellipsis'>2017年1月1日23:36:35</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			//批量监听
+			mui('#imlist').on('tap', '.mui-table-view-cell', function() {
+//				var docID = this.getAttribute('id');
+//				//获得医生详情页面
+//				if(!docHP){
+//					docHP = plus.webview.getWebviewById('docHP.html');
+//				}
+				//通知自定义事件
+//				mui.fire(docHP,'docID',{
+//					docID:docID
+//				});
+				mui.openWindow({
+					url:'im-chat.html',
+					show:{
+						aniShow:'pop-in'
+					}
+				});
+			}); 
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/shouye.css"/>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <header class="mui-bar mui-bar-nav" id="header">
+		        <h1 class="mui-title" id="title">新商品</h1>
+		    </header>
+		    <div id="" style="text-align: center;">
+		    	<img id="new_order" src="" style="width: 250px;height: 250px;"/>
+		    </div>
+		    <div id="">
+				<ul class="mui-table-view" id="imlist">
+					<form class="mui-input-group">
+						<div class="mui-input-row">
+							<label>商品名称</label>
+							<label>山药</label>
+						</div>
+						<div class="mui-input-row">
+							<label>价格</label>
+							<label>20</label>
+						</div>
+						<div class="mui-input-row">
+							<label>发货地</label>
+							<label>惠州</label>
+						</div>
+					</from>
+				</ul>
+		    </div>
+		    <div id="">
+		    	<button type="button" class="mui-btn mui-btn-block" style="background-color: #F4A460;color: white;margin-top:180px;">保存修改</button>
+			</div>
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var img_path = self.img_path;
+				document.getElementById("new_order").src = img_path;
+				
+			})
+		</script>
+	</body>
+
+</html>

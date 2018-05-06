@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/iconfont_mine.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mine.css "/>
+		<style>		
+			.mui-table-view {
+				margin-top: 20px;
+			}
+			img{
+				height:80px;
+				width: 80px;
+			}
+			.m1{
+				color:orange;
+				}
+			.m2{
+				color:red;
+				}
+			.m3{
+				color:coral;
+				}
+			.m4{
+				color:#C0C0C0;
+				}
+			.m5{
+				color:#4EC7EF;
+				}				
+		</style>
+	</head>
+ 
+	
+
+	<body>
+		<div class="mui-content">	
+			<ul class="mui-table-view mui-table-view-chevron ">
+				<li class="mui-table-view-cell mui-media">
+					<a class="mui-navigate-right" id="account">
+						<table>
+							<tr>
+								<td><img id="head-img" src="../images/user-photo.png" /></td>
+								<td style="padding-left: 15px;">
+									<div class="mui-media-body">
+										账号：<span id="user_name">请登录</span>
+										<!--<p class='mui-ellipsis'>账号:<span id="user_phone">无</span></p>-->
+									</div>
+								</td>
+							</tr>
+						</table>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a id="myorder" class="mui-navigate-right">
+						<table><td><span class="iconfont icon-qianbao m1"></span>
+						我的订单</td></table></a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="kaidian" class="mui-navigate-right">
+						<table><td><span class="iconfont icon-guanzhu m2"></span>
+						我要开店</td></table></a>
+				</li>
+			</ul>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a id="feedback" class="mui-navigate-right">
+						<table><td><span class="iconfont icon-fankui m3"></span>
+						意见反馈</td></table></a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="about" class="mui-navigate-right">
+					<table>
+						<tr><td><span class="iconfont icon-guanyu m4"></span>
+						关于</td>
+						</td><i class="mui-pull-right update"><p>V1.0.1</p></i></td></table>
+					</a> 
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="general" class="mui-navigate-right">
+						<table><td><span class="iconfont icon-shezhi m5"></span>
+						通用设置</td></table>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li id="logout" class="mui-table-view-cell" style="text-align: center;">
+					<a>退出登录</a>
+				</li>
+			</ul>
+		</div>
+		
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var user_id = plus.storage.getItem('user_id');
+				var user_name = plus.storage.getItem('user_name');
+				var loginbtn = document.getElementById("user_name");
+				if(user_name){
+					loginbtn.innerHTML = user_name;
+					mui.ajax('http://'+serverName+serverPath+'Connector/User/getuserInfo',{
+	      				data:{
+	      					user_id :user_id 
+	      				},
+	      				dataType:'json',
+	      				type:'POST', 
+	      				timeout:10000,
+	      				success:function(data){
+	      					//{"reslut":1}表示请求数据成功
+	      					if(data.result==1){ 
+								//document.getElementById("user_name").innerHTML=data.user_name;
+								document.getElementById("head-img").src=data.user_img;
+	      					}else{ 
+	      						//plus.ui.toast(data.data);
+	      						plus.nativeUI.toast("请检查您的网络");
+	      					}
+	      				},
+	      				error:function(){
+	      					plus.nativeUI.toast("请检查您的网络");
+	      				}
+	      			})
+				}
+				
+				//账号信息
+				var account = document.getElementById("account");
+				account.addEventListener('tap',function(){
+					//没有登录跳转到登录页面
+					if(user_name){
+						//已经登录，跳转到我的详细信息
+						mui.openWindow({
+							url: 'account.html',
+							id: 'account',
+	//						extras:{
+	//					    	img_path:img_path
+	//					    },
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						}); 
+					}else{
+						mui.openWindow({
+							url: '/login/login.html',
+							id: 'login',
+	//						extras:{
+	//					    	img_path:img_path
+	//					    },
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						}); 
+					}
+				})	
+				
+				//我的订单
+				var myorder = document.getElementById("myorder");
+				myorder.addEventListener('tap',function(){
+					if(user_id){
+//						mui.openWindow({
+//							url: '/login/login.html',
+//							id: 'login',
+//	//						extras:{
+//	//					    	img_path:img_path
+//	//					    },
+//							show: {
+//								aniShow: 'pop-in'
+//							},
+//							waiting: {
+//								autoShow: false
+//							}
+//						}); 
+					}else{
+						alert('请先登录');
+					}
+				})
+				
+				//我的要开店
+				var kaidian = document.getElementById("kaidian");
+				kaidian.addEventListener('tap',function(){
+					if(user_id){
+						mui.ajax('http://'+serverName+serverPath+'Connector/User/getsellerInfo',{
+		      				data:{
+		      					user_id :user_id 
+		      				},
+		      				dataType:'json',
+		      				type:'POST', 
+		      				timeout:10000,
+		      				success:function(data){
+		      					//{"reslut":1}表示请求数据成功
+		      					if(data.result==1){ 
+									alert("您已经是店主了");
+		      					}else{ 
+		      						mui.openWindow({
+										url: 'kaidian.html',
+										id: 'kaidian',
+				//						extras:{
+				//					    	img_path:img_path
+				//					    },
+										show: {
+											aniShow: 'pop-in'
+										},
+										waiting: {
+											autoShow: false
+										}
+									}); 
+		      					}
+		      				},
+		      				error:function(){
+		      					plus.nativeUI.toast("请检查您的网络");
+		      				}
+		      			})
+					}else{
+						alert('请先登录');
+					}
+					
+				})
+				
+				//意见反馈
+				var feedback = document.getElementById("feedback");
+				feedback.addEventListener('tap',function(){
+					if(user_id){
+						mui.openWindow({
+							url: 'feedback.html',
+							id: 'feedback',
+	//						extras:{
+	//					    	img_path:img_path
+	//					    },
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						}); 
+					}else{
+						alert('请先登录');
+					}
+					
+				})
+				
+				//关于
+				var about = document.getElementById("about");
+				about.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'about.html',
+						id: 'about',
+//						extras:{
+//					    	img_path:img_path
+//					    },
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					}); 
+				})
+				
+				//通用设置
+				var general = document.getElementById("general");
+				general.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'general.html',
+						id: 'general',
+//						extras:{
+//					    	img_path:img_path
+//					    },
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					}); 
+				})
+				
+				//退出登录
+				var logout = document.getElementById("logout");
+				logout.addEventListener('tap',function(){
+					if(user_name){
+						var btnArray = ['否', '是'];
+						mui.confirm('您是否确认退出？', '农产品销售平台', btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        plus.storage.clear();
+								plus.ui.toast("您已成功退出");
+								mui.openWindow({
+									url: '/login/login.html',
+									id: 'login',
+									show: {
+										aniShow: 'pop-in'
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+								setTimeout(function(){
+									plus.webview.getWebviewById('mine/mine_index.html').reload();	
+								},1000);
+		                    } else {
+		                       
+		                    }
+		                })
+					}else{
+						plus.ui.toast("请先登录");
+						mui.openWindow({
+							url: '/login/login.html',
+							id: 'login',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

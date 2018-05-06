@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/shouye.css"/>
+	</head>
+
+	<body>
+		 <header class="mui-bar mui-bar-nav" id="header">
+	        <h1 class="mui-title" id="title">新商品</h1>
+	    </header>
+	    
+		<div class="mui-content">
+		    <ul id="goods_list" class="mui-table-view">
+				<!--<li id='' class='mui-table-view-cell mui-media'>
+					<img class='mui-media-object mui-pull-left' src='../images/shuijiao.jpg'>
+					<div class='mui-media-body'>
+						<span>幸福</span>
+						<p class='mui-ellipsis'>能是件幸福的事情；可是，打呼噜怎么办？</p>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var cate_id = self.cate_id;
+				mui.ajax('http://'+serverName+serverPath+'Connector/Goods/get_goods_list',{
+      				data:{
+      					cate_id :cate_id 
+      				},
+      				dataType:'json',
+      				type:'POST', 
+      				timeout:10000,
+      				success:function(data){
+      					//{"reslut":1}表示请求数据成功
+      					if(data.result==0){ 
+      						plus.nativeUI.toast("请检查您的网络");
+							//document.getElementById("user_name").innerHTML=data.user_name;
+							document.getElementById("head-img").src=data.user_img;
+      					}else{ 
+      						var s="";
+							for(var i=0;i<data.length;i++){
+								s+="<li id='"+data[i].goods_id+"' class='mui-table-view-cell mui-media'>";
+								s+="<img class='mui-media-object mui-pull-left' src='../images/shuijiao.jpg'><div class='mui-media-body'>";
+								s+="<span>"+data[i].goods_name+"</span>";
+								s+="<p class='mui-ellipsis'>￥："+data[i].price+"</p>";
+								s+="</div></li>";
+							}
+							var goods_list =document.getElementById("goods_list");
+							goods_list.innerHTML = s;
+      					}
+      				},
+      				error:function(){
+      					plus.nativeUI.toast("请检查您的网络");
+      				}
+      			})
+			})
+		</script>
+	</body>
+
+</html>

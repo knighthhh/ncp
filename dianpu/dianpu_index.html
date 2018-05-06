@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="../css/dianpu.css"/>
+		
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" id="header">
+		    <h1 class="mui-title" id="title">农产品销售平台</h1>
+		</header>
+		
+		<div class="mui-content">
+			<div id="dianpuimg">
+				<img src="../images/guanggao.jpg" />
+			</div>
+			<div id="dianpulist">
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+					<li id="goods" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-home"></span>
+							<div class="mui-media-body">商品管理</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-bars"></span>
+							<div class="mui-media-body">分类管理</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-compose"></span>
+							<div class="mui-media-body">订单管理</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-star"></span>
+							<div class="mui-media-body">店铺设置</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-flag"></span>
+							<div class="mui-media-body">主题设置</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-chatbubble"><span class="mui-badge">5</span></span>
+							<div class="mui-media-body">咨询管理</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-paperplane"></span>
+							<div class="mui-media-body">支付方式</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-gear"></span>
+							<div class="mui-media-body">配送方式</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+						<a href="#">
+							<span class="mui-icon mui-icon-info"></span>
+							<div class="mui-media-body">退货/退款</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var user_id = plus.storage.getItem('user_id');
+				var seller = false;
+				if(user_id){
+					//如果已经登录，查询是否是卖家
+					mui.ajax('http://'+serverName+serverPath+'Connector/User/getsellerInfo',{
+	      				data:{
+	      					user_id :user_id 
+	      				},
+	      				dataType:'json',
+	      				type:'POST', 
+	      				timeout:10000,
+	      				success:function(data){
+	      					//{"reslut":1}表示请求数据成功
+	      					if(data.result==1){ 
+								seller = true;
+	      					}else{ 
+	      						//plus.ui.toast(data.data);
+	      					}
+	      				},
+	      				error:function(){
+	      					plus.nativeUI.toast("请检查您的网络");
+	      				}
+	      			})
+				}
+				
+				//店铺功能的批量监听
+				mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
+				  //获取id
+				  var id = this.getAttribute("id");
+//				  //传值给详情页面，通知加载新数据
+//				  mui.fire(detail,'getDetail',{id:id});
+//				  //打开新闻详情
+				  
+					if(seller){
+						var id = this.getAttribute("id");
+						if(id == 'goods'){
+							mui.openWindow({
+						   		url:'goods.html',
+						   		id:'goods',
+						   		extras:{
+						    		user_id:user_id
+						   		},
+						    });
+						}else{
+							alert("该功能尚未完善");
+						}
+					}else{
+						alert("你还不是卖家，请申请开店");
+					}
+				}) 
+			})
+		</script>
+		
+	</body>
+
+</html>

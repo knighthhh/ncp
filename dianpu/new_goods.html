@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="../css/dianpu.css"/>
+		
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" id="header">
+		    <h1 class="mui-title" id="title">农产品销售平台</h1>
+		</header>
+		
+		<div class="mui-content">
+		   
+			
+			<div id="camera">
+				<img  style="height:300px;width: 100%;" src="../images/xiangji.jpg"/>
+			</div>
+			
+			<div id="dcontent" class="dcontent">
+			<!--<p class="heading">上传文件列表：</p>-->
+			<ul id="files" style="text-align:left;">
+				<p id="empty" style="font-size:12px;color:#C6C6C6;">无上传文件</p>
+				<img id="upload_img" src="" style="height: 50px;width:50px"/>
+				<button id="new_order" class="mui-pull-right" style="height: 50px;background-color:#F4A460;color: white;">填写属性</button>
+			</ul>
+			
+			<div id="add" style="display:none">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>商品名称</label>
+						<input id='goods_name' type="text" class="mui-input-clear mui-input" placeholder="请输入商品名称">
+					</div>
+					<div class="mui-input-row">
+						<label>价格</label>
+						<input id='price' type="text" class="mui-input-clear mui-input" placeholder="请输入价格">
+					</div>
+					<div class="mui-input-row">
+						<label>数量</label>
+						<input id='stock' type="text" class="mui-input-clear mui-input" placeholder="请输入数量">
+					</div>
+					<div class="mui-input-row">
+						<label>描述</label>
+						<input id='description' type="text" class="mui-input-clear mui-input" placeholder="请对商品进行描述">
+					</div>
+				</form>
+			</div>
+			
+			<!--<table style="width:100%;">
+				<tbody>
+					<tr>
+						<td style="width:40%"><div class="button button-select" onclick="appendByCamera()">拍照</div></td>
+						<td style="width:40%"><div class="button button-select" onclick="appendByGallery()">相册选取</div></td>
+					</tr>
+				</tbody>
+			</table>-->
+			<br/>
+			<div class="button" id="fabu" style="background-color:#F4A460;">发布产品</div> 
+			<br/>
+		</div>
+			
+		</div>
+		
+		
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:1500//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+		</script>
+		<script type="text/javascript">
+		mui.plusReady(function(){
+				
+			var user_id = plus.storage.getItem('user_id');
+			var goods_name=document.getElementById("goods_name");
+      		var price=document.getElementById("price");
+      		var description=document.getElementById("description");
+      		var stock=document.getElementById("stock");
+		
+			
+			var img_path;
+			var server="http://"+serverName+"/ncpapp/index.php/Connector/Dianpu/new_goods";
+			var files=[];
+			// 上传文件
+			function upload(){
+				if(files.length<=0){
+					plus.nativeUI.alert("没有添加上传文件！");
+					return;
+				}
+//				outSet("开始上传：")
+//				var wt=plus.nativeUI.showWaiting();
+				var task=plus.uploader.createUpload(server,
+					{method:"POST"},
+					function(t,status){ //上传完成
+						if(status==200){
+//							var resp = eval(t.responseText);
+							alert("发布成功");
+							mui.back();
+//							plus.ui.toast(t.responseText.data);
+//							outLine("上传成功："+t.responseText);
+//							plus.storage.setItem("uploader",t.responseText);
+//							var w=plus.webview.create("uploader_ret.html","uploader_ret.html",{scrollIndicator:'none',scalable:false});
+//							w.addEventListener("loaded",function(){
+//								wt.close();
+//								w.show("slide-in-right",300);
+//							},false);
+						}else{
+							alert('上传失败');
+//							outLine("上传失败："+status);
+							wt.close();
+						}
+					}
+				);
+				task.addData("user_id",user_id);
+				task.addData("goods_name",goods_name.value);
+				task.addData("price",price.value);
+				task.addData("description",description.value);
+				task.addData("stock",stock.value);
+				task.addData("uid",getUid());
+				for(var i=0;i<files.length;i++){
+					var f=files[i];
+					task.addFile(f.path,{key:f.name});
+				}
+				task.start();
+			}
+			// 拍照添加文件
+			function appendByCamera(){
+				plus.camera.getCamera().captureImage(function(p){
+					 plus.io.resolveLocalFileSystemURL(p, function(entry) {
+			       		 //显示
+			       		img_path =  entry.toLocalURL();	
+						document.getElementById("upload_img").src = img_path;
+					}) 
+					appendFile(p);
+				});	
+			}
+			// 从相册添加文件
+			function appendByGallery(){
+				plus.gallery.pick(function(p){
+			        appendFile(p);
+			    });
+			}
+			// 添加文件
+			var index=1;
+			function appendFile(p){
+				var fe=document.getElementById("files");
+				var li=document.createElement("li");
+				var n=p.substr(p.lastIndexOf('/')+1);
+				li.innerText=n;
+//				fe.appendChild(li);
+				files.push({name:"uploadkey"+index,path:p});
+				index++;
+				empty.style.display="none";
+			}
+			// 产生一个随机数
+			function getUid(){
+				return Math.floor(Math.random()*100000000+10000000).toString();
+			}
+			
+			//填写属性
+			var new_order = document.getElementById("new_order");
+			var addbtn = document.getElementById("add");
+			new_order.addEventListener('tap',function(){
+				add.style.display='block';
+			})
+			
+			//点击发布产品
+			var fabu = document.getElementById("fabu");
+			fabu.addEventListener('tap',function(){
+				upload();
+			})
+			
+			var camera = document.getElementById("camera");
+			camera.addEventListener('tap',function(){
+				appendByCamera();
+			})
+			
+		})
+		
+		</script>
+	</body>
+
+</html>

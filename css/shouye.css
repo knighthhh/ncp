@@ -1,0 +1,92 @@
+#header{
+	background-color: #F4A460;
+}
+
+#title{
+	color:white;
+}
+
+#slider img{
+	height: 180px;
+}
+
+/*八宫格常见分类*/
+.box-a{
+	background: #fff;
+	overflow: hidden;
+}
+.box-a .mui-table-view-cell:after{
+	height: 0px;
+}
+.box-a-l{
+	width: 25%;
+	text-align: center;
+	padding: 15px 0px;
+	float: left;
+	/*border-right: 1px solid #f0f0f0;
+	border-bottom: 1px solid #f0f0f0;*/
+}
+.box-a-l  span{
+	
+	font-size: 35px;
+	/*display: inline-block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 100px;
+	color: #fff;*/
+}
+.box-a-l p{
+	margin: 0px;
+	padding-top: 5px;
+	color: #000;
+	font-size: 13px;
+}
+
+.tu-yi{
+	color:#8B0000;
+}
+.tu-er{
+	color:#FF6767;
+}
+
+.tu-san{
+	color:#FF9F22;
+}
+
+.tu-si{
+	color:#F4A460;
+}
+
+.tu-wu{
+	color:#8B0000;
+}
+
+.tu-liu{
+	color:#000000;
+}
+
+.tu-qi{
+	color:#CCCCCC;
+}
+
+.tu-ba{
+	color:#EC971F;
+}
+/*八宫格常见分类*/
+
+/*四宫格*/
+#dazhe img{
+	height: 100px;
+}
+
+/*#dazhe li{
+	border-bottom: 1px solid #CCCCCC;
+}*/
+/*四宫格*/
+
+/*广告*/
+#guanggao img{
+	width: 100%;
+}
+/*广告*/

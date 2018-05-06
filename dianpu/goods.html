@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/dianpu.css"/>
+	</head>
+	
+	<body>
+		<header class="mui-bar mui-bar-nav" id="header">
+			<h1 class="mui-title" id="title">农产品销售平台</h1>
+		</header>
+		
+		<div class="mui-content">
+			<div >
+				<button id="goods_list" type="button" class="mui-btn mui-btn-warning mui-btn-block">商品列表</button>
+				<button id="new_goods" type="button" class="mui-btn mui-btn-warning mui-btn-block">添加商品</button>
+			</div>
+		</div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+				var user_id = self.user_id;
+				var goods_list = document.getElementById("goods_list");
+				var new_goods = document.getElementById("new_goods");	
+				
+				goods_list.addEventListener('tap',function(){
+					alert('该功能尚未完善');
+				})
+				//可以不用传参，直接getStrome
+				new_goods.addEventListener('tap',function(){
+					mui.openWindow({
+						url: 'new_goods.html',
+						id: 'new_goods',
+						extras:{
+					    	user_id:user_id
+					    },
+					});
+				})
+			})
+		</script>
+	</body>
+
+</html>
